@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Solutions | Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy:   #0B1B2B;
+      --blue:   #1A6FC4;
+      --sky:    #38AEEC;
+      --accent: #00E5C0;
+      --light:  #F0F6FF;
+      --white:  #FFFFFF;
+      --gray:   #6B7C93;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(11,27,43,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--navy) !important; padding: 0.45rem 1.2rem; border-radius: 6px; font-weight: 700 !important; }
+
+    /* PAGE HEADER */
+    .page-header { background: linear-gradient(135deg, var(--navy) 0%, #112B47 60%, #0D3460 100%); padding: 120px 5% 60px; text-align: center; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(56,174,236,0.12) 0%, transparent 70%); }
+    .page-header-tag { display: inline-block; background: rgba(0,229,192,0.12); border: 1px solid rgba(0,229,192,0.3); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.35rem 1rem; border-radius: 50px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--white); margin-bottom: 1rem; position: relative; z-index: 1; }
+    .page-header p { color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 520px; margin: 0 auto; line-height: 1.75; position: relative; z-index: 1; }
+
+    /* MAIN LAYOUT */
+    .contact-section { padding: 5rem 5%; background: var(--light); }
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; max-width: 1100px; margin: 0 auto; }
+
+    /* INFO SIDE */
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .info-card { background: var(--white); border-radius: 16px; padding: 1.8rem; border: 1px solid #E2EBF6; }
+    .info-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+    .info-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .info-item-text strong { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .info-item-text span { color: var(--gray); font-size: 0.83rem; }
+    .hours-card { background: linear-gradient(135deg, var(--navy), #0D3460); border-radius: 16px; padding: 1.8rem; }
+    .hours-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; }
+    .hours-row { display: flex; justify-content: space-between; font-size: 0.83rem; padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row span:first-child { color: rgba(255,255,255,0.6); }
+    .hours-row span:last-child { color: var(--accent); font-weight: 600; }
+
+    /* FORM SIDE */
+    .contact-form-card { background: var(--white); border-radius: 20px; padding: 2.5rem; border: 1px solid #E2EBF6; box-shadow: 0 4px 24px rgba(26,111,196,0.07); }
+    .contact-form-card h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .contact-form-card p { color: var(--gray); font-size: 0.88rem; margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .form-group label { font-size: 0.83rem; font-weight: 600; color: var(--navy); }
+    .form-group label span { color: #E53E3E; margin-left: 2px; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.75rem 1rem; border: 1.5px solid #D1E3F8; border-radius: 10px;
+      font-size: 0.88rem; font-family: inherit; color: var(--navy);
+      background: var(--white); transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,111,196,0.1); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select { cursor: pointer; }
+    .submit-btn { width: 100%; padding: 0.95rem; background: linear-gradient(135deg, var(--blue), var(--sky)); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(26,111,196,0.3); }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,111,196,0.4); }
+
+    /* SUCCESS / ERROR messages */
+    .alert { padding: 1rem 1.2rem; border-radius: 10px; margin-bottom: 1.5rem; font-size: 0.88rem; font-weight: 500; display: none; }
+    .alert.success { background: rgba(0,229,192,0.1); border: 1px solid rgba(0,229,192,0.3); color: #0A7A6A; }
+    .alert.error { background: rgba(229,62,62,0.08); border: 1px solid rgba(229,62,62,0.3); color: #C53030; }
+
+    /* FOOTER */
+    footer { background: var(--navy); padding: 3rem 5% 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.7; margin-top: 0.75rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; max-width: 1200px; margin: 0 auto; }
+
+    /* CHATBOT */
+    .chat-widget { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
+    .chat-toggle { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--accent)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 20px rgba(26,111,196,0.4); transition: transform 0.2s; }
+    .chat-toggle:hover { transform: scale(1.08); }
+    .chat-box { display: none; position: absolute; bottom: 70px; right: 0; width: 300px; background: var(--white); border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); overflow: hidden; border: 1px solid #E2EBF6; }
+    .chat-box.open { display: block; animation: slideUp 0.25s ease; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .chat-head { background: linear-gradient(135deg, var(--navy), var(--blue)); padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.7rem; }
+    .chat-head h4 { color: white; font-size: 0.9rem; font-weight: 600; }
+    .chat-head p { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .chat-messages { padding: 1rem; height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; }
+    .msg { padding: 0.6rem 0.85rem; border-radius: 10px; font-size: 0.82rem; line-height: 1.5; max-width: 85%; }
+    .msg.bot { background: var(--light); color: var(--navy); align-self: flex-start; }
+    .msg.user { background: var(--blue); color: white; align-self: flex-end; }
+    .chat-input { display: flex; border-top: 1px solid #E2EBF6; }
+    .chat-input input { flex: 1; border: none; outline: none; padding: 0.75rem 1rem; font-size: 0.82rem; font-family: inherit; }
+    .chat-input button { background: var(--blue); border: none; color: white; padding: 0 1rem; cursor: pointer; font-size: 1rem; }
+
+    @media (max-width: 768px) {
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">AI<span>-Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="contact.html" class="active nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-tag">Get In Touch</div>
+  <h1>Contact Us</h1>
+  <p>Have a project in mind or want to learn more about our services? Fill in the form below and our team will get back to you shortly.</p>
+</div>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
+  <div class="contact-wrapper">
+
+    <!-- INFO -->
+    <div class="contact-info">
+      <div class="info-card">
+        <h3>Contact Information</h3>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-item-text">
+            <strong>Address</strong>
+            <span>AI-Solutions HQ, Sunderland, SR1 3LA, United Kingdom</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div class="info-item-text">
+            <strong>Phone</strong>
+            <span>+44 191 000 0000</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div class="info-item-text">
+            <strong>Email</strong>
+            <span>info@ai-solutions.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hours-card">
+        <h3>🕐 Office Hours</h3>
+        <div class="hours-row"><span>Monday — Friday</span><span>9:00 AM — 5:30 PM</span></div>
+        <div class="hours-row"><span>Saturday</span><span>10:00 AM — 2:00 PM</span></div>
+        <div class="hours-row"><span>Sunday</span><span>Closed</span></div>
+      </div>
+
+      <div class="info-card">
+        <h3>💬 What Happens Next?</h3>
+        <div class="info-item">
+          <div class="info-icon">1️⃣</div>
+          <div class="info-item-text">
+            <strong>We receive your enquiry</strong>
+            <span>Your details are securely saved to our system.</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">2️⃣</div>
+          <div class="info-item-text">
+            <strong>Our team reviews it</strong>
+            <span>We assess your requirements within 1 business day.</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">3️⃣</div>
+          <div class="info-item-text">
+            <strong>We get back to you</strong>
+            <span>Expect a response within 24–48 hours.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form-card">
+      <h2>Send Us a Message</h2>
+      <p>All fields are required. We'll never share your information with third parties.</p>
+
+      <div class="alert success" id="successMsg">✅ Thank you! Your enquiry has been submitted successfully. We'll be in touch within 24–48 hours.</div>
+      <div class="alert error" id="errorMsg">❌ Something went wrong. Please check all fields and try again.</div>
+
+      <form id="contactForm" action="contact_process.php" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name <span>*</span></label>
+            <input type="text" name="full_name" placeholder="e.g. John Smith" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address <span>*</span></label>
+            <input type="email" name="email" placeholder="e.g. john@company.com" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number <span>*</span></label>
+            <input type="tel" name="phone" placeholder="e.g. +44 7700 000000" required />
+          </div>
+          <div class="form-group">
+            <label>Company Name <span>*</span></label>
+            <input type="text" name="company" placeholder="e.g. TechNova Ltd" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Country <span>*</span></label>
+            <select name="country" required>
+              <option value="">Select your country</option>
+              <option>United Kingdom</option>
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>India</option>
+              <option>Nepal</option>
+              <option>UAE</option>
+              <option>Singapore</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Job Title <span>*</span></label>
+            <input type="text" name="job_title" placeholder="e.g. Head of IT" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Job Details <span>*</span></label>
+          <textarea name="job_details" placeholder="Please describe your project or enquiry in detail..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Enquiry →</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="font-size:1.2rem;">AI<span>-Solutions</span></a>
+      <p>Innovating the digital employee experience through affordable, AI-powered software solutions for businesses worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="#">info@ai-solutions.com</a>
+      <a href="#">Sunderland, UK</a>
+      <a href="#">+44 191 000 0000</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 AI-Solutions. All rights reserved. | CET333 Product Development</div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chat-widget">
+  <div class="chat-box" id="chatBox">
+    <div class="chat-head">
+      <div>🤖</div>
+      <div><h4>AI Assistant</h4><p>Ask me anything!</p></div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Hi! I'm the AI-Solutions virtual assistant. How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+</div>
+
+<script>
+  function toggleChat() { document.getElementById('chatBox').classList.toggle('open'); }
+
+  // Ordered from most specific to least specific — longer/more specific phrases are checked FIRST
+  const responses = [
+    { keys: ['forgot password', 'reset password', 'change password'], reply: "For password issues, please contact our support team directly via the Contact Us form — our team will assist you personally." },
+    { keys: ['admin', 'dashboard', 'login'], reply: "The admin area is restricted to authorised AI-Solutions staff only. If you're a customer, you don't need an account — just use our Contact Us form!" },
+    { keys: ['book a demo', 'schedule a demo', 'demo'], reply: "We'd love to show you a demo! Please fill in the Contact Us form with your job details and our team will schedule a personalised walkthrough." },
+    { keys: ['price', 'cost', 'pricing', 'how much'], reply: "Our pricing is tailored to each client's specific needs and scale. Please use the Contact Us form to request a personalised quote." },
+    { keys: ['event', 'workshop', 'seminar'], reply: "We host regular workshops and seminars! Check our Events page for upcoming dates, locations and how to register." },
+    { keys: ['gallery', 'photo'], reply: "You can see photos from our past events and workshops in the Photo Gallery section of our Events page." },
+    { keys: ['service', 'what do you offer', 'what can you do'], reply: "We offer four core services: AI Virtual Assistants, Rapid Prototyping, Digital Experience Analytics, and Secure System Integration. Visit our Services page for full details!" },
+    { keys: ['chatbot', 'virtual assistant', 'ai assistant'], reply: "That's me! I'm a keyword-based assistant here to help answer common questions about AI-Solutions. For detailed enquiries, the Contact Us form is best." },
+    { keys: ['team', 'who founded', 'ceo', 'founder'], reply: "AI-Solutions was founded by Dr. Alan Carter, supported by a team of engineers, designers and AI specialists. You can read more on our About page!" },
+    { keys: ['about', 'who are you', 'company', 'mission'], reply: "AI-Solutions is a start-up based in Sunderland, UK, on a mission to make AI accessible and affordable for businesses of every size." },
+    { keys: ['contact', 'reach you', 'get in touch', 'email', 'phone number'], reply: "You can reach us via the Contact Us form on this site, by email at info@ai-solutions.com, or by phone at +44 191 000 0000." },
+    { keys: ['location', 'where are you', 'address', 'based'], reply: "We're based in Sunderland, United Kingdom, but we serve clients across the globe." },
+    { keys: ['hours', 'open', 'opening time'], reply: "Our office hours are Monday–Friday 9:00 AM–5:30 PM and Saturday 10:00 AM–2:00 PM. We're closed on Sundays." },
+    { keys: ['thank', 'thanks'], reply: "You're very welcome! Let me know if there's anything else I can help you with." },
+    { keys: ['bye', 'goodbye'], reply: "Thanks for stopping by AI-Solutions! Feel free to reach out anytime through our Contact Us form." },
+    { keys: ['hello', 'hi', 'hey'], reply: "Hello! Welcome to AI-Solutions. How can I help you today — services, events, or getting in touch?" },
+  ];
+
+  const fallbacks = [
+    "That's a great question! For detailed information, please visit our Contact Us page and our team will get back to you directly.",
+    "I might not have a specific answer for that, but our team can help — please reach out through the Contact Us form.",
+    "I'm not totally sure about that one! Try asking about our services, events, or how to get in touch, or contact our team directly.",
+  ];
+
+  function getResponse(text) {
+    const lower = text.toLowerCase();
+    for (const entry of responses) {
+      if (entry.keys.some(k => lower.includes(k))) return entry.reply;
+    }
+    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+
+    const reply = getResponse(text);
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'msg bot';
+      botMsg.textContent = reply;
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+    }, 600);
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+ 
+const urlParams = new URLSearchParams(window.location.search);
+const status = urlParams.get('status');
+if (status === 'success') {
+  document.getElementById('successMsg').style.display = 'block';
+  document.getElementById('contactForm').reset();
+} else if (status === 'error') {
+  document.getElementById('errorMsg').style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Solutions | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:   #0B1B2B;
+      --blue:   #1A6FC4;
+      --sky:    #38AEEC;
+      --accent: #00E5C0;
+      --light:  #F0F6FF;
+      --white:  #FFFFFF;
+      --gray:   #6B7C93;
+      --card:   #EBF3FC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(11,27,43,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.4rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--navy) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 700 !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, #112B47 60%, #0D3460 100%);
+      display: flex; align-items: center;
+      padding: 68px 5% 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(56,174,236,0.13) 0%, transparent 70%);
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,229,192,0.12);
+      border: 1px solid rgba(0,229,192,0.3);
+      color: var(--accent);
+      font-size: 0.78rem; font-weight: 600;
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag::before { content: '●'; font-size: 0.5rem; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 800; line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--sky), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1.05rem; line-height: 1.75;
+      margin-bottom: 2.2rem; max-width: 480px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: var(--navy);
+      padding: 0.8rem 2rem; border-radius: 8px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,229,192,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,229,192,0.4); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      padding: 0.8rem 2rem; border-radius: 8px;
+      font-weight: 500; font-size: 0.95rem;
+      text-decoration: none; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%; max-width: 400px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-card-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .ai-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .hero-card-header h3 { color: var(--white); font-family: 'Syne', sans-serif; font-size: 1rem; }
+    .hero-card-header p { color: var(--gray); font-size: 0.8rem; }
+    .chat-bubble {
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.5;
+    }
+    .chat-bubble.ai {
+      background: rgba(0,229,192,0.1);
+      border: 1px solid rgba(0,229,192,0.2);
+      color: rgba(255,255,255,0.9);
+    }
+    .chat-label { font-size: 0.7rem; color: var(--accent); font-weight: 600; margin-bottom: 0.3rem; }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1rem; margin-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.72rem; color: var(--gray); margin-top: 0.2rem; }
+
+    section { padding: 5rem 5%; }
+    .section-tag {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800; color: var(--navy);
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+    .section-center { text-align: center; }
+    .section-center .section-sub { margin: 0 auto; }
+
+    .services-section { background: var(--light); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: 16px; padding: 2rem;
+      border: 1px solid rgba(26,111,196,0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,111,196,0.12); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--sky));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.2rem;
+    }
+    .service-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .service-card p { color: var(--gray); font-size: 0.88rem; line-height: 1.65; }
+
+    .articles-section { background: var(--white); }
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .article-card { background: var(--light); border-radius: 16px; overflow: hidden; border: 1px solid #E2EBF6; transition: transform 0.25s, box-shadow 0.25s; }
+    .article-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,111,196,0.12); }
+    .article-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .article-img.a1 { background: linear-gradient(135deg, #1A6FC4, #38AEEC); }
+    .article-img.a2 { background: linear-gradient(135deg, #0D3460, #1A6FC4); }
+    .article-img.a3 { background: linear-gradient(135deg, #00E5C0, #1A6FC4); }
+    .article-body { padding: 1.3rem; }
+    .article-date { color: var(--blue); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+    .article-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .article-card p { color: var(--gray); font-size: 0.85rem; line-height: 1.6; }
+
+    .feedback-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+      max-width: 1100px; margin-left: auto; margin-right: auto;
+    }
+    .feedback-card {
+      background: var(--white); border-radius: 16px; padding: 1.8rem;
+      border: 1px solid #E2EBF6;
+    }
+    .stars { color: #F59E0B; font-size: 1rem; margin-bottom: 0.9rem; letter-spacing: 2px; }
+    .feedback-card p { color: #3D526B; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .feedback-author { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 0.9rem;
+    }
+    .author-name { font-weight: 600; font-size: 0.88rem; }
+    .author-role { color: var(--gray); font-size: 0.78rem; }
+
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy), #0D3460);
+      text-align: center; padding: 5rem 5%;
+    }
+    .cta-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800; color: var(--white); margin-bottom: 1rem;
+    }
+    .cta-section p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; font-size: 1rem; }
+
+    footer {
+      background: var(--navy);
+      padding: 3rem 5% 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 2rem;
+      max-width: 1200px; margin-left: auto; margin-right: auto;
+    }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.7; margin-top: 0.75rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.5rem; text-align: center;
+      color: rgba(255,255,255,0.3); font-size: 0.8rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .chat-widget {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    }
+    .chat-toggle {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 20px rgba(26,111,196,0.4);
+      transition: transform 0.2s;
+    }
+    .chat-toggle:hover { transform: scale(1.08); }
+    .chat-box {
+      display: none;
+      position: absolute; bottom: 70px; right: 0;
+      width: 300px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      overflow: hidden;
+      border: 1px solid #E2EBF6;
+    }
+    .chat-box.open { display: block; animation: slideUp 0.25s ease; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .chat-head {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      padding: 1rem 1.2rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .chat-head-icon { font-size: 1.3rem; }
+    .chat-head h4 { color: white; font-size: 0.9rem; font-weight: 600; }
+    .chat-head p { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .chat-messages { padding: 1rem; height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; }
+    .msg { padding: 0.6rem 0.85rem; border-radius: 10px; font-size: 0.82rem; line-height: 1.5; max-width: 85%; }
+    .msg.bot { background: var(--light); color: var(--navy); align-self: flex-start; }
+    .msg.user { background: var(--blue); color: white; align-self: flex-end; }
+    .chat-input { display: flex; border-top: 1px solid #E2EBF6; }
+    .chat-input input {
+      flex: 1; border: none; outline: none;
+      padding: 0.75rem 1rem; font-size: 0.82rem; font-family: inherit;
+    }
+    .chat-input button {
+      background: var(--blue); border: none; color: white;
+      padding: 0 1rem; cursor: pointer; font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .chat-input button:hover { background: var(--navy); }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">AI<span>-Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag">AI-Powered Solutions</div>
+      <h1>Innovate the <em>Digital Employee Experience</em></h1>
+      <p>AI-Solutions leverages cutting-edge artificial intelligence to rapidly address digital workplace challenges — speeding up design, engineering, and innovation for businesses worldwide.</p>
+      <div class="hero-btns">
+        <a href="contact.html" class="btn-primary">Get in Touch</a>
+        <a href="services.html" class="btn-outline">Our Services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="ai-icon">🤖</div>
+          <div>
+            <h3>AI Virtual Assistant</h3>
+            <p>Online — Ready to help</p>
+          </div>
+        </div>
+        <div class="chat-bubble">
+          <div class="chat-label">YOU</div>
+          Can you help us improve our employee onboarding process?
+        </div>
+        <div class="chat-bubble ai">
+          <div class="chat-label">AI ASSISTANT</div>
+          Absolutely! I can analyse your current workflow and suggest AI-driven improvements to reduce onboarding time by up to 60%.
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Clients Served</div></div>
+          <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+          <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Industries</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services-section">
+  <div style="max-width:1200px;margin:0 auto;text-align:center;">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Software Solutions Built for the Future</h2>
+    <p class="section-sub" style="margin:0 auto;">From AI-powered virtual assistants to custom prototyping, we deliver affordable and scalable solutions for modern businesses.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>AI Virtual Assistant</h3>
+        <p>Intelligent chatbots that handle customer queries, guide users, and escalate to human staff when needed — 24/7.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Rapid Prototyping</h3>
+        <p>From concept to working prototype in record time. We accelerate your innovation pipeline with AI-driven development tools.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Digital Experience Analytics</h3>
+        <p>Deep insights into your digital employee experience — identify friction points and boost productivity across your organisation.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Secure System Integration</h3>
+        <p>Seamlessly connect AI tools into your existing systems with enterprise-grade security and compliance standards.</p>
+      </div>
+    </div>
+    <a href="services.html" class="btn-primary" style="display:inline-block;margin-top:2.5rem;">View All Services</a>
+  </div>
+</section>
+
+<section class="articles-section">
+  <div style="max-width:1100px;margin:0 auto;text-align:center;">
+    <div class="section-tag">Latest News</div>
+    <h2 class="section-title">Articles &amp; Insights</h2>
+    <p class="section-sub" style="margin:0 auto;">Updates and insights from AI-Solutions on the future of AI-powered workplaces.</p>
+    <div class="articles-grid">
+      <div class="article-card">
+        <div class="article-img a1">📰</div>
+        <div class="article-body">
+          <div class="article-date">June 2026</div>
+          <h3>How AI Virtual Assistants Are Changing Customer Support</h3>
+          <p>We explore how AI-powered assistants are helping businesses respond faster and more accurately to customer needs.</p>
+        </div>
+      </div>
+      <div class="article-card">
+        <div class="article-img a2">📰</div>
+        <div class="article-body">
+          <div class="article-date">May 2026</div>
+          <h3>Rapid Prototyping: From Idea to Reality in Days</h3>
+          <p>Discover how our AI-driven prototyping process helps clients test new ideas faster than traditional development.</p>
+        </div>
+      </div>
+      <div class="article-card">
+        <div class="article-img a3">📰</div>
+        <div class="article-body">
+          <div class="article-date">April 2026</div>
+          <h3>Why Digital Employee Experience Matters in 2026</h3>
+          <p>A look at why businesses are investing more than ever in tools that improve the digital workplace for employees.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div style="max-width:1100px;margin:0 auto;text-align:center;">
+    <div class="section-tag">Customer Feedback</div>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="feedback-grid">
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"AI-Solutions transformed our customer support. Response times dropped by 70% and our team can now focus on complex issues."</p>
+        <div class="feedback-author">
+          <div class="avatar">JM</div>
+          <div><div class="author-name">James Mitchell</div><div class="author-role">CTO, TechNova Ltd</div></div>
+        </div>
+      </div>
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"The prototyping solution saved us months of development time. Truly impressive AI-driven workflow — highly recommend."</p>
+        <div class="feedback-author">
+          <div class="avatar">SR</div>
+          <div><div class="author-name">Sarah Rahman</div><div class="author-role">Head of Product, FinEdge</div></div>
+        </div>
+      </div>
+      <div class="feedback-card">
+        <div class="stars">★★★★☆</div>
+        <p>"Outstanding support and a genuinely smart virtual assistant. Our employee onboarding is now fully automated and seamless."</p>
+        <div class="feedback-author">
+          <div class="avatar">DK</div>
+          <div><div class="author-name">David Kim</div><div class="author-role">HR Director, GlobalCorp</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to Transform Your Digital Experience?</h2>
+  <p>Get in touch today and let's build your AI-powered solution together.</p>
+  <a href="contact.html" class="btn-primary">Contact Us Now</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="font-size:1.2rem;">AI<span>-Solutions</span></a>
+      <p>Innovating the digital employee experience through affordable, AI-powered software solutions for businesses worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="#">info@ai-solutions.com</a>
+      <a href="#">Sunderland, UK</a>
+      <a href="#">+44 191 000 0000</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 AI-Solutions. All rights reserved. | CET333 Product Development</div>
+</footer>
+
+<div class="chat-widget">
+  <div class="chat-box" id="chatBox">
+    <div class="chat-head">
+      <div class="chat-head-icon">🤖</div>
+      <div>
+        <h4>AI Assistant</h4>
+        <p>Ask me anything!</p>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Hi! I'm the AI-Solutions virtual assistant. How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+</div>
+
+<script>
+  function toggleChat() { document.getElementById('chatBox').classList.toggle('open'); }
+
+  const responses = [
+    { keys: ['forgot password', 'reset password', 'change password'], reply: "For password issues, please contact our support team directly via the Contact Us form — our team will assist you personally." },
+    { keys: ['admin', 'dashboard', 'login'], reply: "The admin area is restricted to authorised AI-Solutions staff only. If you're a customer, you don't need an account — just use our Contact Us form!" },
+    { keys: ['book a demo', 'schedule a demo', 'demo'], reply: "We'd love to show you a demo! Please fill in the Contact Us form with your job details and our team will schedule a personalised walkthrough." },
+    { keys: ['price', 'cost', 'pricing', 'how much'], reply: "Our pricing is tailored to each client's specific needs and scale. Please use the Contact Us form to request a personalised quote." },
+    { keys: ['event', 'workshop', 'seminar'], reply: "We host regular workshops and seminars! Check our Events page for upcoming dates, locations and how to register." },
+    { keys: ['gallery', 'photo'], reply: "You can see photos from our past events and workshops in the Photo Gallery section of our Events page." },
+    { keys: ['service', 'what do you offer', 'what can you do'], reply: "We offer four core services: AI Virtual Assistants, Rapid Prototyping, Digital Experience Analytics, and Secure System Integration. Visit our Services page for full details!" },
+    { keys: ['chatbot', 'virtual assistant', 'ai assistant'], reply: "That's me! I'm a keyword-based assistant here to help answer common questions about AI-Solutions. For detailed enquiries, the Contact Us form is best." },
+    { keys: ['team', 'who founded', 'ceo', 'founder'], reply: "AI-Solutions was founded by Dr. Alan Carter, supported by a team of engineers, designers and AI specialists. You can read more on our About page!" },
+    { keys: ['about', 'who are you', 'company', 'mission'], reply: "AI-Solutions is a start-up based in Sunderland, UK, on a mission to make AI accessible and affordable for businesses of every size." },
+    { keys: ['contact', 'reach you', 'get in touch', 'email', 'phone number'], reply: "You can reach us via the Contact Us form on this site, by email at info@ai-solutions.com, or by phone at +44 191 000 0000." },
+    { keys: ['location', 'where are you', 'address', 'based'], reply: "We're based in Sunderland, United Kingdom, but we serve clients across the globe." },
+    { keys: ['hours', 'open', 'opening time'], reply: "Our office hours are Monday–Friday 9:00 AM–5:30 PM and Saturday 10:00 AM–2:00 PM. We're closed on Sundays." },
+    { keys: ['thank', 'thanks'], reply: "You're very welcome! Let me know if there's anything else I can help you with." },
+    { keys: ['bye', 'goodbye'], reply: "Thanks for stopping by AI-Solutions! Feel free to reach out anytime through our Contact Us form." },
+    { keys: ['hello', 'hi', 'hey'], reply: "Hello! Welcome to AI-Solutions. How can I help you today — services, events, or getting in touch?" },
+  ];
+
+  const fallbacks = [
+    "That's a great question! For detailed information, please visit our Contact Us page and our team will get back to you directly.",
+    "I might not have a specific answer for that, but our team can help — please reach out through the Contact Us form.",
+    "I'm not totally sure about that one! Try asking about our services, events, or how to get in touch, or contact our team directly.",
+  ];
+
+  function getResponse(text) {
+    const lower = text.toLowerCase();
+    for (const entry of responses) {
+      if (entry.keys.some(k => lower.includes(k))) return entry.reply;
+    }
+    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+
+    const reply = getResponse(text);
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'msg bot';
+      botMsg.textContent = reply;
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+    }, 600);
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+</script>
+
+</body>
+</html>

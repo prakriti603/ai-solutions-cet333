@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI-Solutions | Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy:   #0B1B2B;
+      --blue:   #1A6FC4;
+      --sky:    #38AEEC;
+      --accent: #00E5C0;
+      --light:  #F0F6FF;
+      --white:  #FFFFFF;
+      --gray:   #6B7C93;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(11,27,43,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--navy) !important; padding: 0.45rem 1.2rem; border-radius: 6px; font-weight: 700 !important; }
+
+    /* PAGE HEADER */
+    .page-header { background: linear-gradient(135deg, var(--navy) 0%, #112B47 60%, #0D3460 100%); padding: 120px 5% 60px; text-align: center; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(56,174,236,0.12) 0%, transparent 70%); }
+    .page-header-tag { display: inline-block; background: rgba(0,229,192,0.12); border: 1px solid rgba(0,229,192,0.3); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.35rem 1rem; border-radius: 50px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--white); margin-bottom: 1rem; position: relative; z-index: 1; }
+    .page-header p { color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 520px; margin: 0 auto; line-height: 1.75; position: relative; z-index: 1; }
+
+    /* SHARED */
+    section { padding: 5rem 5%; }
+    .section-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+    .section-sub { color: var(--gray); font-size: 0.95rem; line-height: 1.75; }
+    .btn-primary { background: var(--accent); color: var(--navy); padding: 0.75rem 1.8rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,229,192,0.3); border: none; cursor: pointer; font-family: inherit; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,229,192,0.4); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--blue); color: var(--blue); padding: 0.75rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: all 0.2s; cursor: pointer; font-family: inherit; }
+    .btn-outline:hover { background: var(--blue); color: var(--white); }
+
+    /* UPCOMING EVENTS */
+    .upcoming-section { background: var(--white); }
+    .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 2rem; max-width: 1200px; margin: 3rem auto 0; }
+    .event-card { border-radius: 20px; overflow: hidden; border: 1px solid #E2EBF6; transition: transform 0.25s, box-shadow 0.25s; }
+    .event-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,111,196,0.12); }
+    .event-card-top { padding: 1.8rem; background: linear-gradient(135deg, var(--navy), #0D3460); position: relative; }
+    .event-date-badge { display: inline-flex; flex-direction: column; align-items: center; background: var(--accent); color: var(--navy); border-radius: 10px; padding: 0.5rem 0.9rem; margin-bottom: 1rem; }
+    .event-date-badge .day { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .event-date-badge .month { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .event-type { display: inline-block; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.8rem; }
+    .event-card-top h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .event-card-top p { color: rgba(255,255,255,0.55); font-size: 0.83rem; line-height: 1.6; }
+    .event-card-bottom { padding: 1.5rem 1.8rem; background: var(--white); }
+    .event-meta { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.3rem; }
+    .event-meta-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.83rem; color: #3D526B; }
+    .event-meta-item span:first-child { font-size: 1rem; }
+    .event-card-bottom .btn-primary { width: 100%; text-align: center; }
+
+    /* PHOTO GALLERY */
+    .gallery-section { background: var(--light); }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; gap: 1rem; max-width: 1100px; margin: 0 auto; }
+    .gallery-item { border-radius: 14px; overflow: hidden; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 3rem; transition: transform 0.25s; position: relative; }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item.large { grid-column: span 2; aspect-ratio: 16/9; }
+    .gallery-item .overlay { position: absolute; inset: 0; background: rgba(11,27,43,0); display: flex; align-items: flex-end; padding: 1rem; transition: background 0.3s; }
+    .gallery-item:hover .overlay { background: rgba(11,27,43,0.5); }
+    .gallery-label { color: white; font-size: 0.82rem; font-weight: 600; opacity: 0; transition: opacity 0.3s; }
+    .gallery-item:hover .gallery-label { opacity: 1; }
+    .g1 { background: linear-gradient(135deg, #1A6FC4, #38AEEC); }
+    .g2 { background: linear-gradient(135deg, #0D3460, #1A6FC4); }
+    .g3 { background: linear-gradient(135deg, #00E5C0, #1A6FC4); }
+    .g4 { background: linear-gradient(135deg, #38AEEC, #00E5C0); }
+    .g5 { background: linear-gradient(135deg, #112B47, #38AEEC); }
+
+    /* PAST EVENTS */
+    .past-section { background: var(--white); }
+    .past-events-list { max-width: 900px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1.2rem; }
+    .past-event-item { display: flex; align-items: center; gap: 1.5rem; background: var(--light); border-radius: 14px; padding: 1.3rem 1.8rem; border: 1px solid #E2EBF6; }
+    .past-event-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--blue), var(--sky)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .past-event-info { flex: 1; }
+    .past-event-info h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .past-event-info p { color: var(--gray); font-size: 0.82rem; }
+    .past-event-date { color: var(--blue); font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+
+    /* CTA */
+    .cta-section { background: linear-gradient(135deg, var(--navy), #0D3460); text-align: center; padding: 5rem 5%; }
+    .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: var(--white); margin-bottom: 1rem; }
+    .cta-section p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+
+    /* FOOTER */
+    footer { background: var(--navy); padding: 3rem 5% 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.7; margin-top: 0.75rem; max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; max-width: 1200px; margin: 0 auto; }
+
+    /* CHATBOT */
+    .chat-widget { position: fixed; bottom: 28px; right: 28px; z-index: 999; }
+    .chat-toggle { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--accent)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 20px rgba(26,111,196,0.4); transition: transform 0.2s; }
+    .chat-toggle:hover { transform: scale(1.08); }
+    .chat-box { display: none; position: absolute; bottom: 70px; right: 0; width: 300px; background: var(--white); border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); overflow: hidden; border: 1px solid #E2EBF6; }
+    .chat-box.open { display: block; animation: slideUp 0.25s ease; }
+    @keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .chat-head { background: linear-gradient(135deg, var(--navy), var(--blue)); padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.7rem; }
+    .chat-head h4 { color: white; font-size: 0.9rem; font-weight: 600; }
+    .chat-head p { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .chat-messages { padding: 1rem; height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; }
+    .msg { padding: 0.6rem 0.85rem; border-radius: 10px; font-size: 0.82rem; line-height: 1.5; max-width: 85%; }
+    .msg.bot { background: var(--light); color: var(--navy); align-self: flex-start; }
+    .msg.user { background: var(--blue); color: white; align-self: flex-end; }
+    .chat-input { display: flex; border-top: 1px solid #E2EBF6; }
+    .chat-input input { flex: 1; border: none; outline: none; padding: 0.75rem 1rem; font-size: 0.82rem; font-family: inherit; }
+    .chat-input button { background: var(--blue); border: none; color: white; padding: 0 1rem; cursor: pointer; font-size: 1rem; }
+    .chat-input button:hover { background: var(--navy); }
+
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.large { grid-column: span 2; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+      .past-event-item { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">AI<span>-Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="events.html" class="active">Events</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-tag">What's On</div>
+  <h1>Events & Workshops</h1>
+  <p>Join us at our upcoming technical workshops, seminars, and promotional events — and explore highlights from past gatherings.</p>
+</div>
+
+<!-- UPCOMING EVENTS -->
+<section class="upcoming-section">
+  <div style="text-align:center; max-width:1200px; margin:0 auto;">
+    <div class="section-tag">Coming Soon</div>
+    <h2 class="section-title">Upcoming Events</h2>
+    <p class="section-sub" style="max-width:520px; margin:0 auto;">Register your interest for our next events — spaces are limited so get in touch early.</p>
+  </div>
+  <div class="events-grid">
+
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-badge"><span class="day">18</span><span class="month">Jul 2026</span></div>
+        <div class="event-type">Workshop</div>
+        <h3>Introduction to AI Virtual Assistants</h3>
+        <p>A hands-on workshop exploring how AI virtual assistants work and how to integrate them into your business workflows.</p>
+      </div>
+      <div class="event-card-bottom">
+        <div class="event-meta">
+          <div class="event-meta-item"><span>📍</span><span>Sunderland Software Centre, SR1 3LA</span></div>
+          <div class="event-meta-item"><span>🕙</span><span>10:00 AM — 1:00 PM</span></div>
+          <div class="event-meta-item"><span>👥</span><span>Limited to 30 attendees</span></div>
+          <div class="event-meta-item"><span>💷</span><span>Free to attend</span></div>
+        </div>
+        <a href="contact.html" class="btn-primary">Register Interest</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-badge"><span class="day">05</span><span class="month">Aug 2026</span></div>
+        <div class="event-type">Seminar</div>
+        <h3>The Future of Digital Employee Experience</h3>
+        <p>An insightful seminar on how AI is reshaping the digital workplace — featuring live demos and expert panel discussions.</p>
+      </div>
+      <div class="event-card-bottom">
+        <div class="event-meta">
+          <div class="event-meta-item"><span>📍</span><span>University of Sunderland, SR1 3SD</span></div>
+          <div class="event-meta-item"><span>🕙</span><span>2:00 PM — 5:00 PM</span></div>
+          <div class="event-meta-item"><span>👥</span><span>Open to all — 50 seats</span></div>
+          <div class="event-meta-item"><span>💷</span><span>Free to attend</span></div>
+        </div>
+        <a href="contact.html" class="btn-primary">Register Interest</a>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-card-top">
+        <div class="event-date-badge"><span class="day">20</span><span class="month">Aug 2026</span></div>
+        <div class="event-type">Technical Workshop</div>
+        <h3>Rapid Prototyping with AI Tools</h3>
+        <p>A technical deep-dive into AI-assisted prototyping — learn how to go from idea to working prototype in days, not months.</p>
+      </div>
+      <div class="event-card-bottom">
+        <div class="event-meta">
+          <div class="event-meta-item"><span>📍</span><span>AI-Solutions HQ, Sunderland</span></div>
+          <div class="event-meta-item"><span>🕙</span><span>9:00 AM — 4:00 PM</span></div>
+          <div class="event-meta-item"><span>👥</span><span>Limited to 20 attendees</span></div>
+          <div class="event-meta-item"><span>💷</span><span>£49 per person</span></div>
+        </div>
+        <a href="contact.html" class="btn-primary">Register Interest</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-header">
+    <div class="section-tag">Memories</div>
+    <h2 class="section-title">Photo Gallery</h2>
+    <p class="section-sub" style="max-width:480px; margin:0 auto;">A look back at some of our favourite moments from past events and workshops.</p>
+  </div>
+  <div class="gallery-grid" style="max-width:1100px; margin:0 auto;">
+    <div class="gallery-item large g1">
+      <span>🎤</span>
+      <div class="overlay"><span class="gallery-label">AI Workshop — March 2026</span></div>
+    </div>
+    <div class="gallery-item g2">
+      <span>💻</span>
+      <div class="overlay"><span class="gallery-label">Prototyping Session</span></div>
+    </div>
+    <div class="gallery-item g3">
+      <span>🤝</span>
+      <div class="overlay"><span class="gallery-label">Networking Event</span></div>
+    </div>
+    <div class="gallery-item g4">
+      <span>📊</span>
+      <div class="overlay"><span class="gallery-label">Analytics Seminar</span></div>
+    </div>
+    <div class="gallery-item large g5">
+      <span>🏆</span>
+      <div class="overlay"><span class="gallery-label">Annual AI-Solutions Summit 2025</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAST EVENTS -->
+<section class="past-section">
+  <div style="max-width:900px; margin:0 auto;">
+    <div class="section-tag">Look Back</div>
+    <h2 class="section-title">Past Events</h2>
+    <p class="section-sub">A record of our previous workshops, seminars, and industry gatherings.</p>
+    <div class="past-events-list">
+      <div class="past-event-item">
+        <div class="past-event-icon">🤖</div>
+        <div class="past-event-info">
+          <h4>AI in the Workplace — Introduction Seminar</h4>
+          <p>Sunderland Software Centre — 45 attendees</p>
+        </div>
+        <div class="past-event-date">March 2026</div>
+      </div>
+      <div class="past-event-item">
+        <div class="past-event-icon">🏆</div>
+        <div class="past-event-info">
+          <h4>AI-Solutions Annual Summit 2025</h4>
+          <p>Newcastle Civic Centre — 200+ attendees</p>
+        </div>
+        <div class="past-event-date">Nov 2025</div>
+      </div>
+      <div class="past-event-item">
+        <div class="past-event-icon">💡</div>
+        <div class="past-event-info">
+          <h4>Digital Employee Experience Workshop</h4>
+          <p>University of Sunderland — 35 attendees</p>
+        </div>
+        <div class="past-event-date">Sep 2025</div>
+      </div>
+      <div class="past-event-item">
+        <div class="past-event-icon">🔒</div>
+        <div class="past-event-info">
+          <h4>AI Security & Compliance Seminar</h4>
+          <p>Online (Virtual Event) — 120 attendees</p>
+        </div>
+        <div class="past-event-date">Jun 2025</div>
+      </div>
+      <div class="past-event-item">
+        <div class="past-event-icon">⚡</div>
+        <div class="past-event-info">
+          <h4>Rapid Prototyping Bootcamp</h4>
+          <p>AI-Solutions HQ, Sunderland — 20 attendees</p>
+        </div>
+        <div class="past-event-date">Feb 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Want to Attend Our Next Event?</h2>
+  <p>Fill in our Contact Us form and we'll keep you updated on all upcoming events.</p>
+  <a href="contact.html" class="btn-primary">Get in Touch</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="font-size:1.2rem;">AI<span>-Solutions</span></a>
+      <p>Innovating the digital employee experience through affordable, AI-powered software solutions for businesses worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="#">info@ai-solutions.com</a>
+      <a href="#">Sunderland, UK</a>
+      <a href="#">+44 191 000 0000</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 AI-Solutions. All rights reserved. | CET333 Product Development</div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chat-widget">
+  <div class="chat-box" id="chatBox">
+    <div class="chat-head">
+      <div>🤖</div>
+      <div><h4>AI Assistant</h4><p>Ask me anything!</p></div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Hi! I'm the AI-Solutions virtual assistant. How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+</div>
+
+<script>
+  function toggleChat() { document.getElementById('chatBox').classList.toggle('open'); }
+
+  // Ordered from most specific to least specific — longer/more specific phrases are checked FIRST
+  const responses = [
+    { keys: ['forgot password', 'reset password', 'change password'], reply: "For password issues, please contact our support team directly via the Contact Us form — our team will assist you personally." },
+    { keys: ['admin', 'dashboard', 'login'], reply: "The admin area is restricted to authorised AI-Solutions staff only. If you're a customer, you don't need an account — just use our Contact Us form!" },
+    { keys: ['book a demo', 'schedule a demo', 'demo'], reply: "We'd love to show you a demo! Please fill in the Contact Us form with your job details and our team will schedule a personalised walkthrough." },
+    { keys: ['price', 'cost', 'pricing', 'how much'], reply: "Our pricing is tailored to each client's specific needs and scale. Please use the Contact Us form to request a personalised quote." },
+    { keys: ['event', 'workshop', 'seminar'], reply: "We host regular workshops and seminars! Check our Events page for upcoming dates, locations and how to register." },
+    { keys: ['gallery', 'photo'], reply: "You can see photos from our past events and workshops in the Photo Gallery section of our Events page." },
+    { keys: ['service', 'what do you offer', 'what can you do'], reply: "We offer four core services: AI Virtual Assistants, Rapid Prototyping, Digital Experience Analytics, and Secure System Integration. Visit our Services page for full details!" },
+    { keys: ['chatbot', 'virtual assistant', 'ai assistant'], reply: "That's me! I'm a keyword-based assistant here to help answer common questions about AI-Solutions. For detailed enquiries, the Contact Us form is best." },
+    { keys: ['team', 'who founded', 'ceo', 'founder'], reply: "AI-Solutions was founded by Dr. Alan Carter, supported by a team of engineers, designers and AI specialists. You can read more on our About page!" },
+    { keys: ['about', 'who are you', 'company', 'mission'], reply: "AI-Solutions is a start-up based in Sunderland, UK, on a mission to make AI accessible and affordable for businesses of every size." },
+    { keys: ['contact', 'reach you', 'get in touch', 'email', 'phone number'], reply: "You can reach us via the Contact Us form on this site, by email at info@ai-solutions.com, or by phone at +44 191 000 0000." },
+    { keys: ['location', 'where are you', 'address', 'based'], reply: "We're based in Sunderland, United Kingdom, but we serve clients across the globe." },
+    { keys: ['hours', 'open', 'opening time'], reply: "Our office hours are Monday–Friday 9:00 AM–5:30 PM and Saturday 10:00 AM–2:00 PM. We're closed on Sundays." },
+    { keys: ['thank', 'thanks'], reply: "You're very welcome! Let me know if there's anything else I can help you with." },
+    { keys: ['bye', 'goodbye'], reply: "Thanks for stopping by AI-Solutions! Feel free to reach out anytime through our Contact Us form." },
+    { keys: ['hello', 'hi', 'hey'], reply: "Hello! Welcome to AI-Solutions. How can I help you today — services, events, or getting in touch?" },
+  ];
+
+  const fallbacks = [
+    "That's a great question! For detailed information, please visit our Contact Us page and our team will get back to you directly.",
+    "I might not have a specific answer for that, but our team can help — please reach out through the Contact Us form.",
+    "I'm not totally sure about that one! Try asking about our services, events, or how to get in touch, or contact our team directly.",
+  ];
+
+  function getResponse(text) {
+    const lower = text.toLowerCase();
+    for (const entry of responses) {
+      if (entry.keys.some(k => lower.includes(k))) return entry.reply;
+    }
+    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+
+    const reply = getResponse(text);
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'msg bot';
+      botMsg.textContent = reply;
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+    }, 600);
+
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+</script>
+</body>
+</html>
